@@ -1,0 +1,2329 @@
+/* =========================================================================
+   PHARMACY VENDING KIOSK - CLINICAL DESIGN SYSTEM
+   Display Target: 21.5" Portrait Touchscreen (1080 x 1920, 9:16)
+   Exact match to extracted_photos UI design system.
+   Palette: Royal Violet (#593796) / Magenta / Berry / Raspberry, Lavender (#F2EFFB), Charcoal (#45404A)
+   Performance: Hardware Accelerated (translate3d, opacity), 60 FPS, Pure CSS/SVG
+   RTL First: Persian Typography & Vazirmatn Font Stack
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* ===== Brand Palette (official) ===== */
+  --brand-violet: #593796;      /* Royal Violet */
+  --brand-magenta: #803697;     /* Magenta */
+  --brand-berry: #A23391;       /* Berry */
+  --brand-raspberry: #B4317F;   /* Raspberry */
+  --brand-red: #CF2846;         /* Signal Red */
+  --brand-white: #FFFFFF;       /* Pure White */
+  --brand-lavender: #F2EFFB;    /* Lavender */
+  --brand-soft-pink: #F1C5D8;   /* Soft Pink */
+  --brand-dusty-pink: #D9A0C0;  /* Dusty Pink */
+  --brand-charcoal: #45404A;    /* Dark Charcoal */
+  --brand-gradient: linear-gradient(135deg, #593796 0%, #803697 32%, #A23391 66%, #B4317F 100%);
+
+  /* Surface & Base Colors */
+  --bg-page-outer: #2E2A33;
+  --bg-kiosk: #F2EFFB;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-subtle: #F8F6FD;
+
+  /* Dark surfaces (charcoal family, formerly "navy") */
+  --navy-deep: #45404A;
+  --navy-dark: #3A3540;
+  --navy-card: #3F3A45;
+  --navy-light: #4E4855;
+  --navy-border: #5A5462;
+
+  /* Brand accents (variable names kept for compatibility: "mint" = brand accent) */
+  --mint-primary: #593796;
+  --mint-light: #803697;
+  --mint-bright: #D9A0C0;
+  --mint-bg: #EFEAF9;
+  --mint-glow: rgba(89, 55, 150, 0.35);
+
+  /* Semantic states, kept inside the brand palette */
+  --amber-primary: #B4317F;
+  --amber-bg: #F8E4EE;
+  --amber-text: #8E2663;
+  --amber-border: #D9A0C0;
+
+  --danger-primary: #CF2846;
+  --danger-bg: #FBE3E7;
+  --danger-text: #A01D36;
+  --danger-border: #F0A9B5;
+
+  /* Text & Border Colors */
+  --text-primary: #45404A;
+  --text-secondary: #5A5462;
+  --text-muted: #6B6574;
+  --text-dim: #8A8394;
+  --border-light: #E6E0F3;
+  --border-subtle: #ECE7F6;
+
+  /* Typography */
+  --font-sans: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Radius Tokens */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(69, 64, 74, 0.05);
+  --shadow-md: 0 8px 24px rgba(69, 64, 74, 0.08);
+  --shadow-lg: 0 16px 40px rgba(69, 64, 74, 0.12);
+  --shadow-glow: 0 10px 30px rgba(89, 55, 150, 0.3);
+}
+
+/* Base Reset & Setup */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-page-outer);
+  font-family: var(--font-sans);
+  direction: rtl;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-primary);
+}
+
+/* Global 1080x1920 Kiosk Frame */
+#kioskContainer {
+  width: 1080px;
+  height: 1920px;
+  max-width: 100vw;
+  max-height: 100vh;
+  background-color: var(--bg-kiosk);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* =========================================================================
+   TOP STATUS BAR
+   ========================================================================= */
+.kiosk-status-bar {
+  height: 76px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--bg-kiosk);
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.status-bar-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Clock & Date */
+.status-clock {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.status-date {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Cloud Status Pill */
+.cloud-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #E6E0F3;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.pulsing-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--mint-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(89, 55, 150, 0.7);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(89, 55, 150, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(89, 55, 150, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(89, 55, 150, 0); }
+}
+
+/* Language Pill Button */
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #E6E0F3;
+  border: none;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+/* Audio Toggle Button (Green Circle) */
+.audio-btn {
+  width: 44px;
+  height: 44px;
+  background: var(--mint-bright);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #45404A;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(89, 55, 150, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.audio-btn:active {
+  transform: scale(0.92);
+}
+
+.audio-btn.muted {
+  background: #D3CAE6;
+  color: #6B6574;
+}
+
+/* Admin Lock Button (Secret Trigger) */
+.admin-lock-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  opacity: 0.35;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s;
+}
+
+.admin-lock-btn:hover, .admin-lock-btn:active {
+  opacity: 0.9;
+}
+
+/* =========================================================================
+   GLOBAL VIEWPORT & SCREEN CONTAINER
+   ========================================================================= */
+.kiosk-viewport {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  opacity: 0;
+  flex-direction: column;
+  padding: 16px 36px 36px 36px;
+  background-color: var(--bg-kiosk);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+.screen-view.active {
+  display: flex;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* =========================================================================
+   REUSABLE STEPPER HEADER (Used in Screens 2, 3, 4, 5)
+   ========================================================================= */
+.stepper-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  flex-shrink: 0;
+}
+
+.btn-step-back {
+  width: 56px;
+  height: 56px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, background 0.15s;
+}
+
+.btn-step-back:active {
+  transform: scale(0.92);
+  background: #F2EFFB;
+}
+
+.stepper-title-col {
+  text-align: center;
+}
+
+.stepper-step-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--mint-light);
+  margin-bottom: 4px;
+}
+
+.stepper-heading {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+/* Stepper Pills Bar (۱ انتخاب, ۲ تایید, ۳ پرداخت, ۴ تحویل) */
+.stepper-pills-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 26px;
+  flex-shrink: 0;
+}
+
+.step-pill {
+  flex: 1;
+  height: 50px;
+  background: #E6E0F3;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: all 0.25s ease;
+}
+
+.step-pill.active {
+  background: var(--navy-deep);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(69, 64, 74, 0.2);
+}
+
+.step-pill.completed {
+  background: #E6DEF5;
+  color: #593796;
+}
+
+.step-num-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.step-pill.active .step-num-badge {
+  background: var(--mint-primary);
+  color: #FFFFFF;
+}
+
+.step-pill.completed .step-num-badge {
+  background: var(--mint-primary);
+  color: #FFFFFF;
+}
+
+/* =========================================================================
+   SCREEN 1: HOME (صفحه خانه - BONE/CREAM BACKGROUND)
+   ========================================================================= */
+.home-screen {
+  padding-top: 10px;
+  padding-bottom: 30px;
+  justify-content: space-between;
+}
+
+/* Brand Header */
+.home-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.home-cross-logo {
+  width: 58px;
+  height: 58px;
+  background: var(--brand-gradient);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(89, 55, 150, 0.35);
+}
+
+.home-brand-text {
+  text-align: right;
+}
+
+.home-pharmacy-name {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  line-height: 1.2;
+}
+
+.home-pharmacy-tagline {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Hero Badge & Title */
+.home-hero-badge-pill {
+  display: inline-block;
+  align-self: center;
+  background: rgba(89, 55, 150, 0.12);
+  color: #593796;
+  padding: 6px 20px;
+  border-radius: var(--radius-full);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.home-headline {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  text-align: center;
+  line-height: 1.35;
+  margin-bottom: 26px;
+}
+
+.home-headline .mint-highlight {
+  color: var(--mint-primary);
+}
+
+/* Featured Medicine Card (پرفروش هفته) */
+.home-featured-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  padding: 24px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+  margin-bottom: 22px;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-featured-badge {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  background: #E6E0F3;
+  color: var(--navy-deep);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+}
+
+.home-featured-info {
+  flex: 1;
+  text-align: right;
+  padding-top: 22px;
+}
+
+.home-featured-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  margin-bottom: 6px;
+}
+
+.home-featured-desc {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.home-featured-dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.feat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: #D3CAE6;
+  transition: all 0.2s;
+}
+
+.feat-dot.active {
+  width: 24px;
+  background: var(--mint-primary);
+}
+
+.home-featured-visual {
+  width: 170px;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Trust Badges 3-Card Row */
+.home-trust-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.home-trust-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: right;
+}
+
+.trust-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: #F5F2FC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mint-primary);
+  flex-shrink: 0;
+}
+
+.trust-card-text strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy-deep);
+}
+
+.trust-card-text span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Primary CTA Button (Glowing Mint Bar) */
+.home-cta-btn {
+  width: 100%;
+  height: 94px;
+  background: var(--brand-gradient);
+  border: none;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  cursor: pointer;
+  box-shadow: var(--shadow-glow);
+  margin-bottom: 24px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  animation: gentle-pulse 3s infinite ease-in-out;
+}
+
+@keyframes gentle-pulse {
+  0%, 100% { transform: translateY(0); box-shadow: 0 10px 30px rgba(89, 55, 150, 0.35); }
+  50% { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(89, 55, 150, 0.5); }
+}
+
+.home-cta-btn:active {
+  transform: scale(0.98);
+}
+
+.cta-left-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--navy-deep);
+}
+
+.cta-center-text {
+  text-align: center;
+}
+
+.cta-main-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: white;
+  letter-spacing: -0.3px;
+}
+
+.cta-sub-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #F2EFFB;
+  opacity: 0.95;
+}
+
+.cta-hand-squircle {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: var(--navy-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
+/* Symptom Categories Grid */
+.home-symptom-label {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.home-symptom-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.home-symptom-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s;
+}
+
+.home-symptom-card:active {
+  transform: translateY(2px);
+  border-color: var(--mint-primary);
+}
+
+.symptom-icon-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: #F2EFFB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  color: var(--navy-deep);
+}
+
+.home-symptom-card:nth-child(1) .symptom-icon-box { background: #E9E2F6; color: #593796; }
+.home-symptom-card:nth-child(2) .symptom-icon-box { background: #F0E3F4; color: #803697; }
+.home-symptom-card:nth-child(3) .symptom-icon-box { background: #F8E4EE; color: #B4317F; }
+.home-symptom-card:nth-child(4) .symptom-icon-box { background: #F5E2F0; color: #A23391; }
+
+.home-symptom-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+  margin-bottom: 4px;
+}
+
+.home-symptom-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+/* Home Footer */
+.home-footer-note {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  padding-top: 10px;
+}
+
+/* =========================================================================
+   SCREEN 2: CATALOG (صفحه کاتالوگ / انتخاب محصول)
+   ========================================================================= */
+.catalog-screen {
+  padding-bottom: 110px;
+}
+
+/* 4 Body Category Tabs */
+.catalog-cats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.cat-btn-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+}
+
+.cat-btn-card.active {
+  border-color: var(--mint-primary);
+  background: #EFEAF9;
+  color: #593796;
+}
+
+/* Sub-filter Pills Row */
+.subfilters-scroll-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.subfilter-pill {
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  background: #E6E0F3;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.subfilter-pill.active {
+  background: #803697;
+  color: #FFFFFF;
+}
+
+/* Catalog Legend & Counter */
+.catalog-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.catalog-indicators {
+  display: flex;
+  gap: 16px;
+}
+
+.ind-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ind-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.ind-dot.in-stock { background: #B4317F; }
+.ind-dot.out-stock { background: #8A8394; }
+
+/* Reachability Notice Area (When accessibility mode active) */
+.reachability-notice {
+  display: none;
+  height: 170px;
+  border: 2px dashed #C4BAD9;
+  border-radius: var(--radius-xl);
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#kioskContainer.reachability-active .reachability-notice {
+  display: flex;
+}
+
+/* 3-Column Products Grid */
+.products-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  flex: 1;
+}
+
+.product-bento-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.product-bento-card:active {
+  transform: translateY(2px);
+  box-shadow: var(--shadow-md);
+}
+
+.product-card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.card-code-pill {
+  font-size: 12px;
+  font-weight: 800;
+  background: #F2EFFB;
+  color: var(--text-muted);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.card-stock-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.card-stock-badge.limited {
+  background: var(--amber-bg);
+  color: var(--amber-text);
+}
+
+.card-stock-badge.empty {
+  background: #F2EFFB;
+  color: #6B6574;
+}
+
+.product-pack-visual-wrap {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: filter 0.25s ease;
+}
+
+.product-card-category {
+  font-size: 12px;
+  font-weight: 700;
+  color: #593796;
+  margin-bottom: 4px;
+}
+
+.product-card-title {
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.product-card-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.product-card-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.product-price-tag {
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--navy-deep);
+}
+
+.product-price-tag span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.btn-add-product {
+  width: 44px;
+  height: 44px;
+  background: var(--navy-deep);
+  border: none;
+  border-radius: 12px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s;
+}
+
+.btn-add-product:active {
+  transform: scale(0.92);
+  background: var(--mint-primary);
+}
+
+.product-bento-card.out-of-stock {
+  opacity: 0.65;
+}
+
+.product-bento-card.out-of-stock .btn-add-product {
+  background: #D3CAE6;
+  cursor: not-allowed;
+}
+
+/* Privacy Mode Styling (Blur sensitive products) */
+#kioskContainer.privacy-active .product-bento-card.sensitive-item .product-pack-visual-wrap {
+  filter: blur(14px);
+}
+
+#kioskContainer.privacy-active .product-bento-card.sensitive-item .product-card-title {
+  color: transparent;
+  background: #D3CAE6;
+  border-radius: 6px;
+  position: relative;
+  display: inline-block;
+}
+
+#kioskContainer.privacy-active .product-bento-card.sensitive-item .product-card-title::after {
+  content: 'نام محرمانه';
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #593796;
+  background: #E6DEF5;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+#kioskContainer.privacy-active .product-bento-card.sensitive-item .product-card-desc {
+  filter: blur(4px);
+}
+
+/* Floating Bottom Toolbar (Catalog Screen) */
+.catalog-bottom-bar {
+  position: absolute;
+  bottom: 24px;
+  left: 36px;
+  right: 36px;
+  display: flex;
+  gap: 14px;
+  z-index: 50;
+}
+
+.btn-toolbar-cancel {
+  flex: 1.2;
+  height: 64px;
+  background: #FBE3E7;
+  border: none;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #A01D36;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-toolbar-reach {
+  flex: 1.4;
+  height: 64px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--navy-deep);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-toolbar-reach.active {
+  background: var(--navy-deep);
+  color: #FFFFFF;
+}
+
+.btn-toolbar-privacy {
+  flex: 1.6;
+  height: 64px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--navy-deep);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-toolbar-privacy.active {
+  background: var(--navy-deep);
+  color: #FFFFFF;
+}
+
+/* =========================================================================
+   SCREEN 3: CONFIRM (صفحه تایید و جزئیات سفارش)
+   ========================================================================= */
+.confirm-screen {
+  padding-bottom: 120px;
+}
+
+.confirm-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.65fr;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+/* Left Column: Physical Slot Box & Smart Suggestion */
+.confirm-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.confirm-slot-card {
+  background: var(--navy-deep);
+  border-radius: var(--radius-xl);
+  padding: 22px;
+  color: #FFFFFF;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+.slot-card-label {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.75;
+  margin-bottom: 6px;
+}
+
+.slot-card-id {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--mint-bright);
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+/* 6x4 Mini Slot Matrix Grid */
+.slot-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  border-radius: 14px;
+}
+
+.matrix-cell {
+  height: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+.matrix-cell.active-slot {
+  background: var(--mint-bright);
+  box-shadow: 0 0 10px var(--mint-bright);
+}
+
+.slot-card-sub {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+/* Smart Suggestion Card */
+.smart-suggestion-card {
+  background: #EFEAF9;
+  border: 1.5px dashed #803697;
+  border-radius: var(--radius-xl);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.smart-sugg-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #593796;
+  margin-bottom: 12px;
+}
+
+.smart-sugg-visual {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.smart-sugg-title {
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--navy-deep);
+}
+
+.smart-sugg-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.smart-sugg-price {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+  margin-bottom: 12px;
+}
+
+.btn-add-cross-sell {
+  width: 100%;
+  height: 44px;
+  background: #803697;
+  border: none;
+  border-radius: var(--radius-md);
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-add-cross-sell.added {
+  background: var(--mint-primary);
+}
+
+/* Right Main Card: Product Details */
+.confirm-product-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  padding: 28px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.confirm-pack-spotlight {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(89, 55, 150, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.confirm-code-tag {
+  font-size: 13px;
+  font-weight: 700;
+  color: #593796;
+  margin-bottom: 4px;
+}
+
+.confirm-title-fa {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  line-height: 1.2;
+}
+
+.confirm-title-en {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.confirm-indication {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.confirm-stock-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--amber-bg);
+  color: var(--amber-text);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 20px;
+}
+
+/* Quantity Selector Pill */
+.confirm-qty-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 320px;
+  background: #F8F6FD;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 10px;
+}
+
+.confirm-qty-pill .qty-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.qty-counter-group {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.btn-qty {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  color: var(--navy-deep);
+  font-size: 20px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.qty-number {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  min-width: 24px;
+  text-align: center;
+}
+
+.qty-max-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Drug Facts Card (جدول ترکیبات) */
+.confirm-facts-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.facts-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+  margin-bottom: 14px;
+}
+
+.facts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.facts-table th {
+  text-align: right;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.facts-table td {
+  padding: 10px 0;
+  color: var(--text-primary);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.facts-usage-pill {
+  background: #EFEAF9;
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #593796;
+  margin-bottom: 10px;
+}
+
+.facts-warning-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--amber-text);
+}
+
+/* Sticky Checkout Bar */
+.confirm-checkout-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-light);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05);
+  padding: 18px 36px 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 60;
+}
+
+.checkout-items-summary {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.checkout-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkout-total-block {
+  text-align: right;
+}
+
+.total-label {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.total-amount-display {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  line-height: 1.1;
+}
+
+.total-amount-display span {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.checkout-btns-group {
+  display: flex;
+  gap: 14px;
+}
+
+.btn-checkout-cancel {
+  height: 66px;
+  padding: 0 28px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-checkout-proceed {
+  height: 66px;
+  padding: 0 36px;
+  background: linear-gradient(135deg, #803697 0%, #593796 100%);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 900;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--shadow-glow);
+}
+
+/* =========================================================================
+   SCREEN 4: PAYMENT (صفحه پرداخت بانکی)
+   ========================================================================= */
+.payment-screen {
+  padding-bottom: 30px;
+  justify-content: space-between;
+}
+
+/* Dark Navy Amount Banner */
+.payment-amount-banner {
+  background: var(--navy-deep);
+  border-radius: var(--radius-xl);
+  padding: 24px 30px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.payment-timer-badge {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  background: var(--amber-primary);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+.payment-banner-label {
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.payment-banner-price {
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.payment-banner-price span {
+  font-size: 17px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+/* 3 Payment Methods Tabs */
+.payment-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.pay-method-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+}
+
+.pay-method-btn.active {
+  background: #EFEAF9;
+  border: 2px solid var(--mint-bright);
+}
+
+.pay-method-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mint-primary);
+  margin-bottom: 8px;
+}
+
+.pay-method-btn strong {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+  margin-bottom: 2px;
+}
+
+.pay-method-btn span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Central POS Terminal Card */
+.payment-terminal-card {
+  flex: 1;
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-md);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* POS Terminal Visual Container */
+.pos-device-visual {
+  position: relative;
+  width: 200px;
+  height: 250px;
+  background: var(--navy-deep);
+  border-radius: 28px;
+  box-shadow: 0 16px 36px rgba(69, 64, 74, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px;
+  margin-bottom: 28px;
+}
+
+/* Contactless Rings Animation */
+.contactless-waves {
+  position: absolute;
+  top: -24px;
+  width: 70px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.c-wave {
+  position: absolute;
+  border: 2px solid var(--mint-bright);
+  border-radius: 50% 50% 0 0;
+  border-bottom: none;
+  animation: wave-expand 2s infinite ease-out;
+}
+
+.c-wave:nth-child(1) { width: 30px; height: 15px; }
+.c-wave:nth-child(2) { width: 50px; height: 25px; animation-delay: 0.4s; }
+.c-wave:nth-child(3) { width: 70px; height: 35px; animation-delay: 0.8s; }
+
+@keyframes wave-expand {
+  0% { opacity: 1; transform: scale(0.6); }
+  100% { opacity: 0; transform: scale(1.3); }
+}
+
+.pos-display-screen {
+  width: 100%;
+  height: 80px;
+  background: #3A3540;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--mint-bright);
+  margin-bottom: 24px;
+}
+
+.pos-card-slot {
+  width: 100%;
+  height: 70px;
+  background: #803697;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
+.pos-prompt-title {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  margin-bottom: 8px;
+}
+
+.pos-bouncing-arrow {
+  color: var(--mint-primary);
+  margin-bottom: 8px;
+  animation: bounce-down 1.5s infinite;
+}
+
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.pos-prompt-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Simulation Buttons Row (Discrete for Demo/Testing) */
+.payment-simulation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.btn-sim-pay {
+  background: #E6E0F3;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 6px 16px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.btn-sim-pay.success:hover { background: #E6DEF5; color: #593796; }
+.btn-sim-pay.fail:hover { background: #FBE3E7; color: #A01D36; }
+
+/* Payment Bottom Row */
+.payment-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.payment-security-shield {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #593796;
+}
+
+.btn-cancel-payment-screen {
+  height: 56px;
+  padding: 0 26px;
+  background: #FBE3E7;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  color: #A01D36;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* =========================================================================
+   SCREEN 5: DISPENSE (تحویل محصول - BONE/CREAM BACKGROUND)
+   ========================================================================= */
+.dispense-screen {
+  padding-bottom: 30px;
+  justify-content: space-between;
+}
+
+.dispense-header-text {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.dispense-status-title {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  margin-bottom: 6px;
+}
+
+.dispense-status-sub {
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+/* Central Animation Grid: Progress Ring on Left, Matrix on Right */
+.dispense-visual-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+/* Progress / Checkmark Indicator */
+.dispense-progress-box {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dispense-ring-wrap {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dispense-ring-svg {
+  transform: rotate(-90deg);
+}
+
+.dispense-ring-bg {
+  fill: none;
+  stroke: #E6E0F3;
+  stroke-width: 12;
+}
+
+.dispense-ring-progress {
+  fill: none;
+  stroke: var(--mint-bright);
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 242; /* ~45% initial */
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.dispense-percentage-text {
+  position: absolute;
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--navy-deep);
+}
+
+/* Success Checkmark Replacement */
+.dispense-complete-checkmark {
+  display: none;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--mint-primary);
+  color: #FFFFFF;
+  align-items: center;
+  justify-content: center;
+  font-size: 70px;
+  box-shadow: var(--shadow-glow);
+  animation: scale-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scale-up {
+  0% { transform: scale(0.4); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Slot Matrix Simulator (Navy Card) */
+.dispense-matrix-card {
+  background: var(--navy-deep);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dispense-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 44px);
+  grid-template-rows: repeat(6, 26px);
+  gap: 8px;
+}
+
+.d-cell {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.d-cell.active-drop {
+  background: #CF2846;
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 12px #CF2846;
+  animation: pulse-drop 1.5s infinite;
+}
+
+@keyframes pulse-drop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* 4 Dispense Step Cards (2x2 Grid) */
+.dispense-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.dispense-step-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+}
+
+.dispense-step-card.active {
+  border-color: var(--mint-primary);
+  background: #EFEAF9;
+}
+
+.step-card-text strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+}
+
+.step-card-text span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.step-status-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #E6E0F3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.dispense-step-card.completed .step-status-icon {
+  background: var(--mint-primary);
+  color: #FFFFFF;
+}
+
+/* Bottom Dispense Door Status Bar */
+.dispense-door-bar {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  padding: 18px 28px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.door-info-col strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--navy-deep);
+}
+
+.door-info-col span {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.door-arrow-icon {
+  color: var(--mint-primary);
+  animation: bounce-down 1.2s infinite;
+}
+
+.btn-dispense-confirm {
+  height: 58px;
+  padding: 0 32px;
+  background: linear-gradient(135deg, #803697 0%, #593796 100%);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 900;
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: var(--shadow-glow);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.15s;
+}
+
+.btn-dispense-confirm:active {
+  transform: scale(0.95);
+}
+
+.btn-dispense-confirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* =========================================================================
+   SCREEN 6: SUCCESS (صفحه تشکر و فاکتور نهایی)
+   ========================================================================= */
+.success-screen {
+  padding-bottom: 24px;
+  justify-content: space-between;
+}
+
+.success-top-hero {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.success-huge-checkmark {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--mint-primary);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 46px;
+  margin: 0 auto 16px auto;
+  box-shadow: 0 0 0 16px rgba(128, 54, 151, 0.18);
+  animation: scale-up 0.4s ease-out;
+}
+
+.success-hero-title {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  margin-bottom: 6px;
+}
+
+.success-hero-sub {
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+/* Main Grid: Left Actions, Right Paper Receipt */
+.success-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* Left Column */
+.success-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.success-receipt-actions-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.receipt-action-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.receipt-btns-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.btn-receipt-type {
+  background: #F8F6FD;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy-deep);
+  transition: all 0.2s;
+}
+
+.btn-receipt-type:active {
+  background: #E6DEF5;
+  color: #593796;
+}
+
+.success-dosage-reminder-card {
+  background: #EFEAF9;
+  border: 1px solid #CDBFE8;
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #593796;
+}
+
+/* Right Column: Realistic Paper Receipt with Zigzag Top */
+.paper-receipt-card {
+  background: var(--bg-surface);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  position: relative;
+  font-family: inherit;
+  border: 1px solid var(--border-light);
+}
+
+.paper-receipt-card::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: radial-gradient(circle, transparent, transparent 50%, var(--bg-surface) 50%, var(--bg-surface) 100%);
+  background-size: 16px 20px;
+}
+
+.receipt-header-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.receipt-title {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+.receipt-item-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy-deep);
+  margin-bottom: 8px;
+}
+
+.receipt-tax-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.receipt-divider {
+  border-bottom: 1.5px dashed var(--border-light);
+  margin-bottom: 16px;
+}
+
+.receipt-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.receipt-total-row strong {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--navy-deep);
+}
+
+.receipt-total-row .rec-price {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--navy-deep);
+}
+
+.receipt-footer-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* Star Rating Card */
+.success-rating-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+}
+
+.rating-label {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+}
+
+.star-rating-group {
+  display: flex;
+  gap: 8px;
+}
+
+.star-btn {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: #D3CAE6;
+  cursor: pointer;
+  transition: transform 0.15s, color 0.15s;
+}
+
+.star-btn.active, .star-btn:hover {
+  color: #B4317F;
+  transform: scale(1.15);
+}
+
+/* Video Consultation Banner (Navy Card) */
+.success-telehealth-banner {
+  background: var(--navy-deep);
+  border-radius: var(--radius-xl);
+  padding: 18px 24px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.telehealth-text strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.telehealth-text .highlight-link {
+  color: var(--mint-bright);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.telehealth-text span {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Success Screen Bottom Bar */
+.success-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-success-finish {
+  flex: 1;
+  height: 68px;
+  background: var(--navy-deep);
+  border: none;
+  border-radius: var(--radius-xl);
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-right: 18px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.15s;
+}
+
+.btn-success-finish:active {
+  transform: scale(0.98);
+}
+
+.success-countdown-badge {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 4px solid var(--mint-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+/* =========================================================================
+   MEDICINE PACKAGE SVG / PACKAGING RENDERING
+   ========================================================================= */
+.med-box-svg {
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));
+}

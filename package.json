@@ -1,0 +1,24 @@
+{
+  "name": "vending-pharmacy",
+  "version": "1.0.0",
+  "description": "55-inch Touchscreen 24/7 Pharmacy Vending Kiosk (Node.js & Vanilla JS 3D Canvas)",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "test": "node -e \"console.log('Running test suite...');\" && node -e \"const { computeCRC16 } = require('./backend/crc16.js'); const t = computeCRC16(Buffer.from('AA01040064020701', 'hex')); if (t !== 0xEC9E) process.exit(1); console.log('CRC16 Test Passed: 0xEC9E');\""
+  },
+  "keywords": [
+    "vending-machine",
+    "atmega",
+    "serial-protocol",
+    "canvas-3d",
+    "pharmacy-kiosk"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "serialport": "^13.0.0",
+    "ws": "^8.18.0"
+  }
+}

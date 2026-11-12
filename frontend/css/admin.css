@@ -1,0 +1,1057 @@
+/* =========================================================================
+   PHARMACY VENDING KIOSK - ADMIN & OPERATOR PANEL STYLES
+   Exact match to image copy 6, 7, 8, 9, 10, 11.png.
+   Features:
+     - Lavender (#F2EFFB) background for Operator PIN screen (as instructed)
+     - 4 Tabs: داشبورد, اسلات‌ها, کنترل دستگاه, تراکنش‌ها
+     - Dark Charcoal (#45404A) charts & accent surfaces
+     - Smooth transitions and hardware-accelerated animations
+   ========================================================================= */
+
+/* Admin Fullscreen Overlay */
+.admin-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-kiosk);
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  overflow: hidden;
+}
+
+.admin-modal-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* =========================================================================
+   OPERATOR PIN LOGIN VIEW (#adminPinView - BONE/CREAM BACKGROUND)
+   ========================================================================= */
+.admin-pin-container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-kiosk);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+}
+
+.pin-lock-squircle {
+  width: 90px;
+  height: 90px;
+  background: rgba(89, 55, 150, 0.15);
+  border: 1.5px solid rgba(89, 55, 150, 0.3);
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mint-primary);
+  margin-bottom: 24px;
+}
+
+.pin-title {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.pin-subtitle {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+  text-align: center;
+}
+
+/* 4 PIN Indicator Dots */
+.pin-dots-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 44px;
+}
+
+.pin-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2.5px solid #D3CAE6;
+  background: transparent;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pin-dot.filled {
+  background: var(--mint-bright);
+  border-color: var(--mint-bright);
+  transform: scale(1.15);
+  box-shadow: 0 0 14px rgba(128, 54, 151, 0.5);
+}
+
+/* 3x4 Keypad matching image copy 11.png */
+.pin-keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 110px);
+  grid-template-rows: repeat(4, 95px);
+  gap: 18px;
+  margin-bottom: 36px;
+}
+
+.keypad-btn {
+  background: var(--navy-deep);
+  border: none;
+  border-radius: var(--radius-xl);
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 34px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(69, 64, 74, 0.18);
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.keypad-btn:active {
+  transform: scale(0.92);
+  background: #4E4855;
+}
+
+.keypad-btn.btn-action {
+  font-size: 26px;
+  color: #8A8394;
+}
+
+.keypad-btn.btn-action:hover, .keypad-btn.btn-action:active {
+  color: #FFFFFF;
+}
+
+/* RFID Tap Demo Button */
+.pin-rfid-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 10px 24px;
+  border-radius: var(--radius-full);
+  background: #E6E0F3;
+  border: none;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.pin-rfid-row:hover {
+  background: #D9D2EA;
+  color: var(--navy-deep);
+}
+
+.btn-pin-exit-kiosk {
+  position: absolute;
+  top: 36px;
+  right: 36px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  padding: 10px 22px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+/* =========================================================================
+   ADMIN DASHBOARD VIEW (#adminDashboardView)
+   ========================================================================= */
+.admin-dashboard-container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-kiosk);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 36px 30px 36px;
+  overflow: hidden;
+}
+
+/* Admin Top Header */
+.admin-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  flex-shrink: 0;
+}
+
+.admin-operator-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.operator-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--navy-deep);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.operator-info strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--navy-deep);
+}
+
+.operator-info span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.admin-brand-center {
+  text-align: left;
+}
+
+.admin-brand-name {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-brand-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Header Status Pills Row */
+.admin-status-pills {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.admin-header-pill {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+
+.admin-header-pill.online {
+  background: #EFEAF9;
+  border-color: #CDBFE8;
+  color: #593796;
+}
+
+/* 4 Main Admin Navigation Tabs (داشبورد, اسلات‌ها, کنترل دستگاه, تراکنش‌ها) */
+.admin-nav-tabs-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+  flex-shrink: 0;
+}
+
+.admin-tab-nav-btn {
+  height: 58px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.admin-tab-nav-btn.active {
+  background: var(--navy-deep);
+  color: #FFFFFF;
+  border-color: var(--navy-deep);
+  box-shadow: 0 6px 16px rgba(69, 64, 74, 0.2);
+}
+
+/* Tab Panes Container */
+.admin-panes-viewport {
+  flex: 1;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 20px;
+}
+
+.admin-tab-pane {
+  display: none;
+  flex-direction: column;
+  animation: fadeIn 0.2s ease;
+}
+
+.admin-tab-pane.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================================
+   TAB 1: DASHBOARD VIEW (image copy 6.png)
+   ========================================================================= */
+/* Navy Sales Card */
+.admin-sales-card {
+  background: var(--navy-deep);
+  border-radius: var(--radius-xl);
+  padding: 26px 32px;
+  color: #FFFFFF;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 18px;
+}
+
+.sales-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.sales-header-text span {
+  font-size: 15px;
+  opacity: 0.75;
+}
+
+.sales-header-text h3 {
+  font-size: 44px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-top: 4px;
+}
+
+.sales-header-text h3 small {
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.sales-growth-pill {
+  background: rgba(89, 55, 150, 0.2);
+  color: var(--mint-bright);
+  font-size: 14px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+}
+
+/* 24h Hourly Sales Bar Chart */
+.sales-chart-wrap {
+  width: 100%;
+}
+
+.sales-bars-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 90px;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sales-bar {
+  flex: 1;
+  background: linear-gradient(180deg, #803697 0%, #593796 100%);
+  border-radius: 6px 6px 0 0;
+  transition: height 0.4s ease;
+}
+
+.sales-chart-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+/* 2-Card Metrics Row */
+.admin-metrics-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.admin-metric-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.metric-label {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.metric-val-big {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--navy-deep);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.metric-sub-note {
+  font-size: 13px;
+  color: var(--mint-primary);
+  font-weight: 700;
+}
+
+/* Storage & Environment Card */
+.admin-storage-env-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 18px;
+}
+
+.storage-env-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+  margin-bottom: 16px;
+}
+
+.sensor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sensor-info-col strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--navy-deep);
+}
+
+.sensor-info-col span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.sensor-gauge-bar {
+  width: 140px;
+  height: 8px;
+  background: #E6E0F3;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.sensor-gauge-fill {
+  height: 100%;
+  background: var(--mint-primary);
+  border-radius: var(--radius-full);
+}
+
+/* Active Alerts List */
+.admin-alerts-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 18px;
+}
+
+.alerts-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+  margin-bottom: 14px;
+}
+
+.alert-item-box {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.alert-item-box.danger { background: #FBE3E7; color: #A01D36; }
+.alert-item-box.warning { background: #F8E4EE; color: #8E2663; }
+.alert-item-box.orange { background: #F8E4EE; color: #8E2663; }
+.alert-item-box.neutral { background: #F2EFFB; color: #5A5462; }
+
+.btn-manage-inventory-fast {
+  width: 100%;
+  height: 50px;
+  background: var(--navy-deep);
+  border: none;
+  border-radius: var(--radius-md);
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Top Selling Products List */
+.admin-top-sellers-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.top-seller-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+/* =========================================================================
+   TAB 2: SLOTS VIEW (image copy 7 & 8.png)
+   ========================================================================= */
+.slots-legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.slots-grid-24 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.slot-admin-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-light);
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 95px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.slot-admin-card:active, .slot-admin-card.selected {
+  border-color: var(--navy-deep);
+  transform: scale(0.98);
+}
+
+.slot-admin-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.slot-admin-id {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--text-muted);
+}
+
+.slot-admin-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--navy-deep);
+  line-height: 1.3;
+}
+
+.slot-admin-stock-val {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--navy-deep);
+}
+
+.slot-status-bar-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.slot-admin-card.status-ok .slot-status-bar-bottom { background: var(--mint-primary); }
+.slot-admin-card.status-limited .slot-status-bar-bottom { background: var(--amber-primary); }
+.slot-admin-card.status-empty .slot-status-bar-bottom { background: var(--danger-primary); }
+
+.slot-admin-card.empty-slot {
+  background: #F8F6FD;
+  opacity: 0.7;
+}
+
+/* Slot Details / Editor Drawer (image copy 8.png) */
+.slot-editor-drawer {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.drawer-active-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.drawer-meta-title h4 {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--navy-deep);
+}
+
+.drawer-meta-title span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.drawer-pack-preview {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawer-adjuster-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 12px 20px;
+  background: #F8F6FD;
+  border-radius: var(--radius-lg);
+}
+
+.drawer-actions-btns {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-drawer-full {
+  flex: 1.5;
+  height: 52px;
+  background: var(--navy-deep);
+  border: none;
+  border-radius: var(--radius-md);
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-drawer-outline {
+  flex: 1;
+  height: 52px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--navy-deep);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================================================================
+   TAB 3: DEVICE CONTROL VIEW (image copy 9.png)
+   ========================================================================= */
+.control-grid-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Operation Mode Toggles */
+.control-modes-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.control-section-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.toggle-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.toggle-switch-row:last-child {
+  border-bottom: none;
+}
+
+.toggle-label-text strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+}
+
+.toggle-label-text span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* iOS Style Switch */
+.switch-control {
+  position: relative;
+  display: inline-block;
+  width: 58px;
+  height: 32px;
+}
+
+.switch-control input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider-track {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #D3CAE6;
+  transition: .3s;
+  border-radius: 34px;
+}
+
+.slider-track:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider-track {
+  background-color: var(--mint-primary);
+}
+
+input:checked + .slider-track:before {
+  transform: translateX(26px);
+}
+
+/* Sliders Card */
+.control-sliders-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.slider-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.slider-setting-row input[type="range"] {
+  width: 240px;
+  accent-color: var(--mint-primary);
+}
+
+/* Quick Commands */
+.control-commands-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.command-btn-item {
+  width: 100%;
+  height: 56px;
+  background: #F8F6FD;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-deep);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  margin-bottom: 12px;
+  transition: all 0.15s;
+}
+
+.command-btn-item.danger {
+  background: #FBE3E7;
+  color: #A01D36;
+  border-color: #F0A9B5;
+}
+
+.command-btn-item:active {
+  transform: scale(0.98);
+}
+
+/* Toast Message */
+.admin-toast-feedback {
+  position: fixed;
+  bottom: 110px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--navy-deep);
+  color: #FFFFFF;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 2000;
+}
+
+.admin-toast-feedback.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =========================================================================
+   TAB 4: TRANSACTIONS VIEW (image copy 10.png)
+   ========================================================================= */
+.trx-header-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.trx-filter-pills-row {
+  display: flex;
+  gap: 10px;
+}
+
+.trx-pill-btn {
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  background: #E6E0F3;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.trx-pill-btn.active {
+  background: var(--navy-deep);
+  color: #FFFFFF;
+}
+
+.admin-transactions-table-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+
+.admin-clean-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-clean-table th {
+  text-align: right;
+  padding: 12px 14px;
+  color: var(--text-muted);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.admin-clean-table td {
+  padding: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--navy-deep);
+}
+
+.trx-status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.trx-status-badge.success { background: #E6DEF5; color: #593796; }
+.trx-status-badge.refund { background: #F8E4EE; color: #8E2663; }
+.trx-status-badge.stuck { background: #FBE3E7; color: #A01D36; }
+.trx-status-badge.cancel { background: #F2EFFB; color: #5A5462; }
+
+.trx-table-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 0 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.btn-export-excel {
+  height: 44px;
+  padding: 0 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--navy-deep);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* =========================================================================
+   ADMIN FOOTER BAR (PERSISTENT AT BOTTOM)
+   ========================================================================= */
+.admin-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.btn-exit-admin-client {
+  flex: 1.8;
+  height: 66px;
+  background: var(--navy-deep);
+  border: none;
+  border-radius: var(--radius-xl);
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-lock-admin-panel {
+  flex: 1;
+  height: 66px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  color: var(--navy-deep);
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
